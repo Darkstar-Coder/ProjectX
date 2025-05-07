@@ -1,0 +1,113 @@
+Chunk Loading System Documentation
+Godot 4 | Version 1.0
+
+📌 Overview
+This system loads/unloads world chunks dynamically around the player, optimizing performance for large pre-designed worlds.
+
+Key Features
+✅ Dynamic Chunk Loading (Only loads nearby chunks)
+✅ Texture & Collision Management (Handles 1024×1024 PNG chunks)
+✅ Player Visibility Fixes (Z-index sorting)
+✅ Godot 4 Compatibility (Updated texture/collision APIs)
+
+⚙️ Technical Specifications
+Setting	Value	Description
+CHUNK_SIZE	1024	Pixel dimensions of each chunk (must match PNG size)
+LOAD_DISTANCE	2	Chunks to load in each direction from player
+COLLISION_THRESHOLD	0.1	Alpha cutoff for generating collisions (0.0-1.0)
+📂 File Structure
+res://
+├── assets/chunks/       # Pre-made 1024x1024 PNGs (chunk_X_Y.png)
+├── scenes/
+│   ├── Chunk.tscn       # Template for each loaded chunk
+│   └── Player.tscn      # Player character
+└── scripts/
+	└── ChunkLoader.gd   # Core loading system
+🔧 Core Script Breakdown
+1. Initialization (_ready())
+gdscript
+await get_tree().process_frame  # Ensures player node exists
+player = get_parent().get_node("Player")  # Gets player reference
+update_chunks(player.global_position)  # Initial load
+Purpose: Safely initializes the system after all nodes are ready.
+
+2. Chunk Updates (update_chunks())
+gdscript
+var current_chunk = Vector2(
+	floor(player_pos.x / CHUNK_SIZE),
+	floor(player_pos.y / CHUNK_SIZE)
+)
+Behavior:
+
+Calculates current chunk from player position
+
+Unloads distant chunks via _unload_chunk()
+
+Loads new chunks via _load_chunk()
+
+3. Chunk Loading (_load_chunk())
+Critical Steps:
+
+Instance Creation
+
+gdscript
+var chunk = preload("res://scenes/Chunk.tscn").instantiate()
+chunk.position = chunk_pos * CHUNK_SIZE
+chunk.z_index = -1  # Draws behind player
+Texture Handling
+
+gdscript
+if ResourceLoader.exists(texture_path):
+	var texture = load(texture_path)
+	texture.set_flags(0)  # Disables texture repeating (Godot 4)
+Collision Generation
+
+gdscript
+bitmap.create_from_image_alpha(texture.get_image())
+var polygons = bitmap.opaque_to_polygons(...)
+4. Chunk Unloading (_unload_chunk())
+gdscript
+loaded_chunks[chunk_pos].queue_free()
+loaded_chunks.erase(chunk_pos)
+Purpose: Cleans up memory by removing distant chunks.
+
+🎨 Rendering & Visibility
+Layer Hierarchy
+Node	Z-Index	Purpose
+Player	0	Ensures player renders above chunks
+Chunks	-1	Forces chunks to render below
+Texture Settings:
+
+Repeat Mode: Disabled (texture.set_flags(0))
+
+Filter: "Nearest" (pixel art) / "Linear" (smooth)
+
+⚠️ Troubleshooting
+Issue	Solution
+Player hidden behind chunks	Verify z_index values (Player: 0, Chunks: -1)
+Textures repeat	Confirm texture.set_flags(0) is called
+Missing collisions	Check PNG alpha channels & threshold value
+Chunks not loading	Validate PNG naming (chunk_X_Y.png) and paths
+🔗 Best Practices
+Pre-Made Chunks
+
+Use consistent PNG naming (chunk_0_0.png, chunk_1_0.png)
+
+Ensure all textures are exactly 1024×1024 pixels
+
+Performance
+
+Limit LOAD_DISTANCE based on hardware
+
+Use object pooling for frequent chunk loading/unloading
+
+Debugging
+
+gdscript
+print("Loading:", chunk_pos, "| Texture:", texture_path)  # Log chunk activity
+📜 Version History
+1.0 (Current): Initial release with Godot 4 support
+
+Fixes: Texture repeat, player visibility, collision generation
+
+Attribution: Adapted from Godot Engine documentation and community best practices.

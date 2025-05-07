@@ -1,8 +1,8 @@
 [gd_scene load_steps=32 format=3 uid="uid://bfc54cqy13auf"]
 
-[ext_resource type="Script" uid="uid://b2s0mc10w3xfi" path="res://Scripts/player.gd" id="1_kne1u"]
-[ext_resource type="Texture2D" uid="uid://b2d5egoxnw73g" path="res://Assets/IDLE.png" id="1_kpjcp"]
-[ext_resource type="Texture2D" uid="uid://dpbiuda6hncug" path="res://Assets/RUN.png" id="2_kne1u"]
+[ext_resource type="Script" uid="uid://b2s0mc10w3xfi" path="res://Scripts/Player.gd" id="1_kne1u"]
+[ext_resource type="Texture2D" uid="uid://b2d5egoxnw73g" path="res://Assets/player/IDLE.png" id="1_kpjcp"]
+[ext_resource type="Texture2D" uid="uid://dpbiuda6hncug" path="res://Assets/player/RUN.png" id="2_kne1u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0rwas"]
 
@@ -201,12 +201,16 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_kne1u")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="CollisonShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 21)
 shape = SubResource("CapsuleShape2D_0rwas")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 4)
 sprite_frames = SubResource("SpriteFrames_xhfnw")
-animation = &"Run"
+animation = &"Idle"
