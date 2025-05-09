@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://b1e36yju4dfxi"]
+
+[ext_resource type="Script" uid="uid://dqxnn65hgof68" path="res://Scripts/Weapon.gd" id="1_sw2lr"]
+[ext_resource type="Texture2D" uid="uid://bb0ul3eshkvlu" path="res://Assets/weapon/at2.png" id="2_sw2lr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sw2lr"]
+atlas = ExtResource("2_sw2lr")
+region = Rect2(0, 0, 73, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lstme"]
+atlas = ExtResource("2_sw2lr")
+region = Rect2(73, 0, 73, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5ieq"]
+atlas = ExtResource("2_sw2lr")
+region = Rect2(146, 0, 73, 78)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n7jpo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sw2lr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lstme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5ieq")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 6.0
+}]
+
+[node name="Weapon" type="Node2D"]
+script = ExtResource("1_sw2lr")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_n7jpo")
+animation = &"attack"
+frame_progress = 1.0
