@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+@onready var stat_component = $StatComponent
+@onready var skill_component = $SkillComponent
+@onready var mine_detector = $MineDetector
+
 @export var speed: float = 150.0
 @export var acceleration: float = 15.0
 @export var friction: float = 10.0
@@ -7,10 +11,32 @@ extends CharacterBody2D
 var input_direction: Vector2 = Vector2.ZERO
 var current_weapon: Node = null  # ✅ Declare the missing variable here
 
+
+
 func _ready():
 	z_index = 10  # Higher than chunks (default is 0)
-	equip_weapon("Sword")  # Example for startup
+	#equip_weapon("Sword")  # Example for startup
+	# Add items to the inventory (For testing, add a sword and a spear)
+	#var sword_scene = load("res://weapons/Sword.tscn")
 
+func perform_chop_action():
+	skill_component.use_skill("chopping", 2.0)  # Gain XP
+	var power = skill_component.get_chopping_power()
+	print("You chopped with power:", power)
+	# → Use this power to reduce tree HP, faster animation, etc.
+
+func perform_mining_action():
+	skill_component.use_skill("mining", 2.0)
+	var power = skill_component.get_mining_power()
+	print("You mined with power:", power)
+	# → Use power for mining speed or yield)
+	
+func perform_attack():
+	skill_component.use_skill("attack", 1.5)
+	var damage = skill_component.get_attack_damage()
+	print("You attacked with damage:", damage)
+	# → Apply this damage to enemiesage)
+	
 func _process(_delta):
 	var mouse_global = get_global_mouse_position()
 	var to_mouse = mouse_global - global_position
@@ -29,9 +55,8 @@ func _process(_delta):
 
 
 func equip_weapon(weapon_name: String):
-	if current_weapon:
-		current_weapon.queue_free()
-	
+	# Equip the weapon from the inventory
+
 	var weapon_scene = load("res://Scenes/Weapon.tscn")
 	current_weapon = weapon_scene.instantiate()
 	$WeaponHolder.add_child(current_weapon)
@@ -45,9 +70,28 @@ func equip_weapon(weapon_name: String):
 	
 	
 func _unhandled_input(event):
-	if event.is_action_pressed("attack") and current_weapon:
-		if current_weapon.has_method("attack"):
-			current_weapon.attack()
+	#if event.is_action_pressed("attack") and current_weapon:
+		#if current_weapon.has_method("attack"):
+			#current_weapon.attack()
+			#
+	#if event.is_action_pressed("chop_action"):
+		#perform_chop_action()
+	#if event.is_action_pressed("mine_action"):
+		#perform_mining_action()
+	#if event.is_action_pressed("attack_action"):
+		#perform_attack()
+		
+	if event.is_action_pressed("mine_action"):
+		print("Mine action triggered!")
+		var overlapping = mine_detector.get_overlapping_bodies()
+		print("Detected bodies: ", overlapping.size())
+		for body in overlapping:
+			if body.has_method("mine"):
+				var mine_power = skill_component.get_mining_power()
+				print("Mining with power: ", mine_power)
+				body.mine(mine_power)
+				skill_component.use_skill("mining", 1.0)
+
 
 
 func _physics_process(delta):
@@ -61,7 +105,3 @@ func _physics_process(delta):
 		velocity = velocity.lerp(Vector2.ZERO, friction * delta)
 	
 	move_and_slide()
-	
-	# Update chunk loader (if attached to World)
-	if get_parent().has_method("update_chunks"):
-		get_parent().update_chunks(global_position)

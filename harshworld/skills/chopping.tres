@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3 uid="uid://butorpw8nqkm3"]
+
+[ext_resource type="Script" uid="uid://bkkhigksu0tpb" path="res://Scripts/skill_data.gd" id="1_ly8p7"]
+
+[resource]
+script = ExtResource("1_ly8p7")
+skill_name = "chopping Skill"
+base_power = 1.0
+proficiency = 0.0
+proficiency_max = 100.0
+metadata/_custom_type_script = "uid://bkkhigksu0tpb"

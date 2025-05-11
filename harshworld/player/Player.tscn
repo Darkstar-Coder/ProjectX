@@ -1,8 +1,13 @@
-[gd_scene load_steps=32 format=3 uid="uid://bfc54cqy13auf"]
+[gd_scene load_steps=38 format=3 uid="uid://bfc54cqy13auf"]
 
 [ext_resource type="Script" uid="uid://b2s0mc10w3xfi" path="res://Scripts/Player.gd" id="1_wnvi2"]
-[ext_resource type="Texture2D" uid="uid://b2d5egoxnw73g" path="res://Assets/player/IDLE.png" id="2_83hs8"]
-[ext_resource type="Texture2D" uid="uid://dpbiuda6hncug" path="res://Assets/player/RUN.png" id="3_x8kxw"]
+[ext_resource type="Texture2D" uid="uid://b2d5egoxnw73g" path="res://Assets/player/Sprites/IDLE.png" id="2_83hs8"]
+[ext_resource type="Texture2D" uid="uid://dpbiuda6hncug" path="res://Assets/player/Sprites/RUN.png" id="3_x8kxw"]
+[ext_resource type="Script" uid="uid://6t5so3w0yahn" path="res://Scripts/stat_component.gd" id="4_06mnu"]
+[ext_resource type="Script" uid="uid://gchs5bo58d54" path="res://Scripts/skill_component.gd" id="5_mhpjh"]
+[ext_resource type="Resource" uid="uid://butorpw8nqkm3" path="res://skills/chopping.tres" id="6_ndjxb"]
+[ext_resource type="Resource" uid="uid://d3h4is2d34u25" path="res://skills/mining.tres" id="7_5qrx2"]
+[ext_resource type="Resource" uid="uid://cvcjmrxx7mrlq" path="res://skills/attack.tres" id="8_b32pr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0rwas"]
 
@@ -201,6 +206,8 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_06mnu"]
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_wnvi2")
 
@@ -213,7 +220,24 @@ shape = SubResource("CapsuleShape2D_0rwas")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 4)
 sprite_frames = SubResource("SpriteFrames_xhfnw")
-animation = &"Idle"
+animation = &"Run"
+frame = 1
+frame_progress = 0.0758586
 
 [node name="WeaponHolder" type="Node2D" parent="."]
 position = Vector2(0, 20)
+
+[node name="StatComponent" type="Node" parent="."]
+script = ExtResource("4_06mnu")
+
+[node name="SkillComponent" type="Node" parent="."]
+script = ExtResource("5_mhpjh")
+chopping = ExtResource("6_ndjxb")
+mining = ExtResource("7_5qrx2")
+attack = ExtResource("8_b32pr")
+
+[node name="MineDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MineDetector"]
+position = Vector2(23, 27)
+shape = SubResource("CircleShape2D_06mnu")
