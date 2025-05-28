@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dyrtpg6kke0ip" path="res://Assets/player/Sprites/Player/frame0006.png" id="8_mlfor"]
 [ext_resource type="Texture2D" uid="uid://dgtv7nql74vls" path="res://Assets/player/Sprites/Player/frame0007.png" id="9_2m0d2"]
 [ext_resource type="Texture2D" uid="uid://7lcuivlpeiug" path="res://Assets/player/Sprites/Player/frame0008.png" id="10_8nth8"]
-[ext_resource type="Script" uid="uid://cyl4cfsr68m4a" path="res://Scripts/mine_detector.gd" id="16_t8epa"]
+[ext_resource type="Script" path="res://Scripts/mine_detector.gd" id="16_t8epa"]
 [ext_resource type="PackedScene" uid="uid://bg2sgv82f4b8j" path="res://Scenes/HealthBar.tscn" id="17_w24id"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v4f8b"]
@@ -67,11 +67,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8epa"]
 size = Vector2(56, 69)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_mask = 4
 script = ExtResource("1_wnvi2")
-chopping_xp_gain = 0.1
-mining_xp_gain = 0.1
-attack_xp_gain = 0.1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -84,6 +82,7 @@ position = Vector2(2, -25)
 scale = Vector2(0.12221, 0.136719)
 sprite_frames = SubResource("SpriteFrames_xhfnw")
 animation = &"Run"
+frame_progress = 0.705942
 
 [node name="WeaponHolder" type="Node2D" parent="."]
 position = Vector2(1, -41)
@@ -98,6 +97,7 @@ mining = ExtResource("7_5qrx2")
 attack = ExtResource("8_b32pr")
 
 [node name="MineDetector" type="Area2D" parent="."]
+collision_mask = 2
 script = ExtResource("16_t8epa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MineDetector"]

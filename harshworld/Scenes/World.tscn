@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://c1trk72aobni7"]
+[gd_scene load_steps=9 format=4 uid="uid://c1trk72aobni7"]
 
 [ext_resource type="Texture2D" uid="uid://ceicgr7dd6806" path="res://Assets/terrain/U3.png" id="1_j0p05"]
 [ext_resource type="Texture2D" uid="uid://pun58fuj7hkm" path="res://Assets/player/Sprites/Grass.png" id="2_gjpho"]
-[ext_resource type="PackedScene" uid="uid://bfc54cqy13auf" path="res://player/Player.tscn" id="2_j0p05"]
+[ext_resource type="PackedScene" uid="uid://bfc54cqy13auf" path="res://Scenes/Player.tscn" id="2_j0p05"]
 [ext_resource type="PackedScene" uid="uid://d0h4oygo6epat" path="res://Scenes/Rock.tscn" id="3_5nsto"]
+[ext_resource type="PackedScene" uid="uid://p5h3ryxrl5du" path="res://Scenes/Enemy.tscn" id="5_p70al"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j0p05"]
 texture = ExtResource("1_j0p05")
@@ -4183,6 +4184,10 @@ tile_set = SubResource("TileSet_5nsto")
 
 [node name="Player" parent="." instance=ExtResource("2_j0p05")]
 position = Vector2(2, -37)
+scale = Vector2(1.63981, 1.64431)
 
 [node name="Rock" parent="." instance=ExtResource("3_5nsto")]
 position = Vector2(68, -4)
+
+[node name="Enemy" parent="." instance=ExtResource("5_p70al")]
+position = Vector2(-14, -276)

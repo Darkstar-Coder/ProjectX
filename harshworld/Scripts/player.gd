@@ -73,7 +73,7 @@ func _physics_process(delta):
 	var mouse_global = get_global_mouse_position()
 	var to_mouse = mouse_global - global_position
 	var direction = to_mouse.normalized()
-	var detector_distance: float = 16.0  # Adjust this to move detector closer/farther from player
+	var detector_distance: float = 50.0  # Adjust this to move detector closer/farther from player
 	mine_detector.position = direction * detector_distance
 
 func equip_weapon(weapon_name: String):
