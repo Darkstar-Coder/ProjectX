@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var stat_component = $StatComponent
 @onready var skill_component = $SkillComponent
 @onready var mine_detector = $MineDetector
-@onready var animated_sprite = $AnimatedSprite2D  # Add this line
+@onready var animated_sprite = $AnimatedSprite2D
 
 @export var speed: float = 150.0
 @export var acceleration: float = 15.0
@@ -38,11 +38,43 @@ func perform_attack():
 	print("You attacked with damage:", damage)
 
 func _process(_delta):
+	# Update weapon position and rotation visually
 	var mouse_global = get_global_mouse_position()
 	var to_mouse = mouse_global - global_position
-	var clamped_position = to_mouse.limit_length(weapon_radius)
+	var direction = to_mouse.normalized()
+
+	var clamped_position = direction * weapon_radius
 	$WeaponHolder.position = clamped_position
 	$WeaponHolder.rotation = to_mouse.angle()
+
+func _physics_process(delta):
+	# Handle player movement
+	input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
+
+	if input_direction != Vector2.ZERO:
+		velocity = velocity.lerp(input_direction * speed, acceleration * delta)
+
+		# Play Run animation
+		if not animated_sprite.is_playing() or animated_sprite.animation != "Run":
+			animated_sprite.play("Run")
+
+		# Flip sprite based on movement direction
+		if input_direction.x < 0:
+			animated_sprite.flip_h = true
+		elif input_direction.x > 0:
+			animated_sprite.flip_h = false
+	else:
+		velocity = velocity.lerp(Vector2.ZERO, friction * delta)
+		animated_sprite.stop()
+
+	move_and_slide()
+
+	# Update mine detector position so physics detects overlaps correctly
+	var mouse_global = get_global_mouse_position()
+	var to_mouse = mouse_global - global_position
+	var direction = to_mouse.normalized()
+	var detector_distance: float = 16.0  # Adjust this to move detector closer/farther from player
+	mine_detector.position = direction * detector_distance
 
 func equip_weapon(weapon_name: String):
 	var weapon_scene = load("res://Scenes/Weapon.tscn")
@@ -65,24 +97,3 @@ func _unhandled_input(event):
 				print("Mining with power: ", mine_power)
 				body.mine(mine_power)
 				skill_component.use_skill("mining", mining_xp_gain)
-
-func _physics_process(delta):
-	input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
-
-	if input_direction != Vector2.ZERO:
-		velocity = velocity.lerp(input_direction * speed, acceleration * delta)
-		
-		# Play Run animation
-		if not animated_sprite.is_playing() or animated_sprite.animation != "Run":
-			animated_sprite.play("Run")
-
-		# Flip the sprite based on direction
-		if input_direction.x < 0:
-			animated_sprite.flip_h = true
-		elif input_direction.x > 0:
-			animated_sprite.flip_h = false
-	else:
-		velocity = velocity.lerp(Vector2.ZERO, friction * delta)
-		animated_sprite.stop()  # Stop animation if idle
-
-	move_and_slide()

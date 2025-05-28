@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bidrpd4w6elv2" path="res://Assets/objects/Rock1.png" id="1_cctuw"]
 [ext_resource type="Script" uid="uid://cntdi6xkx3ogn" path="res://Scripts/rock.gd" id="1_rvwwv"]
-[ext_resource type="PackedScene" uid="uid://c5sh4oa5wktg3" path="res://Scenes/HealthDisplay.tscn" id="3_c4wj8"]
+[ext_resource type="PackedScene" uid="uid://bg2sgv82f4b8j" path="res://Scenes/HealthBar.tscn" id="3_c4wj8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rvwwv"]
 animations = [{
@@ -29,9 +29,9 @@ position = Vector2(74, -16)
 scale = Vector2(1.51919, 1.77241)
 shape = SubResource("CircleShape2D_cctuw")
 
-[node name="CanvasLayer" parent="." instance=ExtResource("3_c4wj8")]
-offset_left = 59.0
-offset_top = -51.0
-offset_right = 59.0
-offset_bottom = -51.0
-scale = Vector2(1.105, 1.105)
+[node name="HealthBar" parent="." instance=ExtResource("3_c4wj8")]
+offset_left = 54.0
+offset_top = -46.0
+offset_right = 294.0
+offset_bottom = -19.0
+scale = Vector2(0.202247, 0.198769)

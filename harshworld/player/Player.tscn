@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bfc54cqy13auf"]
+[gd_scene load_steps=21 format=3 uid="uid://bfc54cqy13auf"]
 
 [ext_resource type="Script" uid="uid://b2s0mc10w3xfi" path="res://Scripts/Player.gd" id="1_wnvi2"]
 [ext_resource type="Texture2D" uid="uid://de4duy84vwvnm" path="res://Assets/player/Sprites/Player/frame0000.png" id="2_t8epa"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://dyrtpg6kke0ip" path="res://Assets/player/Sprites/Player/frame0006.png" id="8_mlfor"]
 [ext_resource type="Texture2D" uid="uid://dgtv7nql74vls" path="res://Assets/player/Sprites/Player/frame0007.png" id="9_2m0d2"]
 [ext_resource type="Texture2D" uid="uid://7lcuivlpeiug" path="res://Assets/player/Sprites/Player/frame0008.png" id="10_8nth8"]
+[ext_resource type="Script" uid="uid://cyl4cfsr68m4a" path="res://Scripts/mine_detector.gd" id="16_t8epa"]
+[ext_resource type="PackedScene" uid="uid://bg2sgv82f4b8j" path="res://Scenes/HealthBar.tscn" id="17_w24id"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v4f8b"]
 size = Vector2(41, 123)
@@ -96,7 +98,13 @@ mining = ExtResource("7_5qrx2")
 attack = ExtResource("8_b32pr")
 
 [node name="MineDetector" type="Area2D" parent="."]
+script = ExtResource("16_t8epa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MineDetector"]
-position = Vector2(69, 0)
 shape = SubResource("RectangleShape2D_t8epa")
+
+[node name="HealthBar" parent="." instance=ExtResource("17_w24id")]
+offset_left = -563.0
+offset_top = -310.0
+offset_right = -323.0
+offset_bottom = -283.0
