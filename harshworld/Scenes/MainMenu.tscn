@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://yp5pshg5i736"]
+
+[ext_resource type="Script" uid="uid://brs42yfh2a5t" path="res://Scripts/MainMenu.gd" id="1_tt5f1"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_tt5f1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 134.0
+offset_right = 172.0
+offset_bottom = 262.0
+scale = Vector2(3.23403, 3.10743)
+alignment = 1
+
+[node name="GameTitleLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "HarshWorld"
+
+[node name="Start_Game" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start Game"
+
+[node name="Options" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quit"
