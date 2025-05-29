@@ -111,3 +111,35 @@ print("Loading:", chunk_pos, "| Texture:", texture_path)  # Log chunk activity
 Fixes: Texture repeat, player visibility, collision generation
 
 Attribution: Adapted from Godot Engine documentation and community best practices.
+
+
+
+
+💡 Usage: Spawn from other object like this
+gdscript
+Copy code
+var drop = preload("res://scenes/items/ItemDrop.tscn").instantiate()
+drop.init("iron_ore", 1)  # Set item_id and quantity properly
+get_tree().current_scene.add_child(drop)
+drop.global_position = global_position
+✅ Why This Is Better
+Feature	Benefit
+init(id, quantity)	Lets you spawn with different items at runtime ✅
+_apply_item_data()	Code reuse, keeps logic clean
+@onready var sprite = $Sprite2D	Catches missing node earlier, easier to reference
+Engine.is_editor_hint()	Allows previewing drops visually in editor
+push_warning()	Safer than silent failures — shows in debugger
+Defensive checks	Prevent errors when Sprite2D or texture is missing
+
+🧩 Optional Future Additions
+You could easily extend this script to add:
+
+✅ Pickups (player can walk over and collect)
+
+🌀 Random Drop Spread (spawn slightly offset)
+
+🔊 Drop Sound (AudioStreamPlayer when it spawns)
+
+🎞️ Drop Animation (small bounce/fade-in)
+
+🧠 Tooltip/Label (show item name on hover)

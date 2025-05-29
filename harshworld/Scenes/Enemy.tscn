@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://p5h3ryxrl5du"]
+[gd_scene load_steps=6 format=3 uid="uid://p5h3ryxrl5du"]
 
 [ext_resource type="Script" uid="uid://tuhvcbuwohxg" path="res://Scripts/Enemy.gd" id="1_m1htj"]
 [ext_resource type="Texture2D" uid="uid://de4duy84vwvnm" path="res://Assets/player/Sprites/Player/frame0000.png" id="2_wovta"]
+[ext_resource type="PackedScene" uid="uid://bg2sgv82f4b8j" path="res://Scenes/HealthBar.tscn" id="3_xeo28"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wovta"]
 size = Vector2(28, 157)
@@ -11,7 +12,7 @@ radius = 245.717
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 4
+collision_mask = 5
 script = ExtResource("1_m1htj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -22,8 +23,15 @@ texture = ExtResource("2_wovta")
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_wovta")
 
-[node name="DetectionArea" type="Area2D" parent="."]
+[node name="DetectionArea" type="Area2D" parent="." groups=["player"]]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_xeo28")
+
+[node name="HealthBar" parent="." instance=ExtResource("3_xeo28")]
+offset_left = -45.0
+offset_top = -116.0
+offset_right = 195.0
+offset_bottom = -89.0
+scale = Vector2(0.445639, 0.44685)

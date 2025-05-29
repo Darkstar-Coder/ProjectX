@@ -24,15 +24,17 @@ script = ExtResource("1_rvwwv")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.48, 0.48)
 sprite_frames = SubResource("SpriteFrames_rvwwv")
+offset = Vector2(-149.255, 19.57)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(74, -16)
+position = Vector2(1, -4)
 scale = Vector2(1.51919, 1.77241)
 shape = SubResource("CircleShape2D_cctuw")
 
 [node name="HealthBar" parent="." instance=ExtResource("3_c4wj8")]
-offset_left = 54.0
-offset_top = -46.0
-offset_right = 294.0
-offset_bottom = -19.0
+offset_left = -21.0
+offset_top = -37.0
+offset_right = 219.0
+offset_bottom = -10.0
 scale = Vector2(0.202247, 0.198769)
+rounded = true

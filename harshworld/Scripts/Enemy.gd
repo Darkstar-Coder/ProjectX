@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export var speed: float = 50.0
 @export var detection_radius: float = 300.0
 @export var attack_range: float = 50.0
-
+@onready var healthbar = $HealthBar
 var player: Node2D = null
 var health: int = 100
 
@@ -19,6 +19,8 @@ func _ready():
 	# Connect signals
 	$DetectionArea.body_entered.connect(_on_body_entered)
 	$DetectionArea.body_exited.connect(_on_body_exited)
+	
+	healthbar.init_health(health)
 
 func _physics_process(delta):
 	if player:
@@ -30,24 +32,30 @@ func _physics_process(delta):
 		# If we're close enough to attack
 		if global_position.distance_to(player.global_position) < attack_range:
 			velocity = Vector2.ZERO  # Stop moving when in attack range
-			attack()
+			#attack()
 		
 		move_and_slide()
 
-func attack():
+#func attack():
 	# Implement your attack logic here
 	# For example, deal damage to player or play attack animation
-	print("Attacking player!")
+	#print("")
 	# You might want to add a cooldown timer for attacks
 
 func take_damage(amount: int):
 	health -= amount
+	print("Enemy Took damage")
+	update_health_display()
 	if health <= 0:
 		die()
 
 func die():
 	# Implement death behavior (play animation, drop items, etc.)
 	queue_free()
+	
+func update_health_display():
+	if healthbar:
+		healthbar.update_health(health)
 
 func _on_body_entered(body: Node2D):
 	if body.is_in_group("player"):
