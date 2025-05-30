@@ -1,31 +1,24 @@
-[gd_scene load_steps=21 format=3 uid="uid://bfc54cqy13auf"]
+[gd_scene load_steps=14 format=3 uid="uid://bfc54cqy13auf"]
 
 [ext_resource type="Script" uid="uid://b2s0mc10w3xfi" path="res://Scripts/Player.gd" id="1_wnvi2"]
-[ext_resource type="Texture2D" uid="uid://de4duy84vwvnm" path="res://Assets/player/Sprites/Player/frame0000.png" id="2_t8epa"]
-[ext_resource type="Texture2D" uid="uid://dyre7q86d25ur" path="res://Assets/player/Sprites/Player/frame0001.png" id="3_w24id"]
+[ext_resource type="Texture2D" uid="uid://dbac2yf653nhw" path="res://Assets/player/Character.png" id="2_megsn"]
 [ext_resource type="Script" uid="uid://6t5so3w0yahn" path="res://Scripts/stat_component.gd" id="4_06mnu"]
-[ext_resource type="Texture2D" uid="uid://dnbor6cqwkma" path="res://Assets/player/Sprites/Player/frame0002.png" id="4_uewl2"]
 [ext_resource type="Script" uid="uid://gchs5bo58d54" path="res://Scripts/skill_component.gd" id="5_mhpjh"]
-[ext_resource type="Texture2D" uid="uid://bfw4vawlt7mj8" path="res://Assets/player/Sprites/Player/frame0003.png" id="5_ofhxi"]
 [ext_resource type="Resource" uid="uid://butorpw8nqkm3" path="res://skills/chopping.tres" id="6_ndjxb"]
-[ext_resource type="Texture2D" uid="uid://cysxd5dx8av8g" path="res://Assets/player/Sprites/Player/frame0004.png" id="6_yu5hk"]
 [ext_resource type="Resource" uid="uid://d3h4is2d34u25" path="res://skills/mining.tres" id="7_5qrx2"]
-[ext_resource type="Texture2D" uid="uid://ddvjcsy2wt1m8" path="res://Assets/player/Sprites/Player/frame0005.png" id="7_q6miu"]
 [ext_resource type="Resource" uid="uid://cvcjmrxx7mrlq" path="res://skills/attack.tres" id="8_b32pr"]
-[ext_resource type="Texture2D" uid="uid://dyrtpg6kke0ip" path="res://Assets/player/Sprites/Player/frame0006.png" id="8_mlfor"]
-[ext_resource type="Texture2D" uid="uid://dgtv7nql74vls" path="res://Assets/player/Sprites/Player/frame0007.png" id="9_2m0d2"]
-[ext_resource type="Texture2D" uid="uid://7lcuivlpeiug" path="res://Assets/player/Sprites/Player/frame0008.png" id="10_8nth8"]
+[ext_resource type="PackedScene" uid="uid://dalgad30y6yvv" path="res://Scenes/StaminaBar.tscn" id="10_yoq75"]
 [ext_resource type="Script" uid="uid://cyl4cfsr68m4a" path="res://Scripts/mine_detector.gd" id="16_t8epa"]
 [ext_resource type="PackedScene" uid="uid://bg2sgv82f4b8j" path="res://Scenes/HealthBar.tscn" id="17_w24id"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v4f8b"]
-size = Vector2(41, 123)
+size = Vector2(23.1103, 65.1251)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xhfnw"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_t8epa")
+"texture": ExtResource("2_megsn")
 }],
 "loop": true,
 "name": &"Idle",
@@ -33,35 +26,11 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_t8epa")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_w24id")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_uewl2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_ofhxi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_yu5hk")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_q6miu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_mlfor")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_2m0d2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_8nth8")
+"texture": ExtResource("2_megsn")
 }],
 "loop": true,
 "name": &"Run",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8epa"]
@@ -74,15 +43,15 @@ script = ExtResource("1_wnvi2")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisonShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, -24)
+position = Vector2(0, -25)
+scale = Vector2(0.64906, 0.935246)
 shape = SubResource("RectangleShape2D_v4f8b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(2, -25)
-scale = Vector2(0.12221, 0.136719)
+scale = Vector2(0.369834, 0.443097)
 sprite_frames = SubResource("SpriteFrames_xhfnw")
 animation = &"Run"
-frame_progress = 0.705942
 
 [node name="WeaponHolder" type="Node2D" parent="."]
 position = Vector2(1, -41)
@@ -97,10 +66,13 @@ mining = ExtResource("7_5qrx2")
 attack = ExtResource("8_b32pr")
 
 [node name="MineDetector" type="Area2D" parent="."]
+position = Vector2(0, -22)
+scale = Vector2(0.893068, 0.776348)
 collision_mask = 2
 script = ExtResource("16_t8epa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MineDetector"]
+scale = Vector2(1.05873, 1.02615)
 shape = SubResource("RectangleShape2D_t8epa")
 
 [node name="HealthBar" parent="." instance=ExtResource("17_w24id")]
@@ -108,3 +80,10 @@ offset_left = -507.0
 offset_top = -278.0
 offset_right = -267.0
 offset_bottom = -251.0
+
+[node name="StaminaBar" parent="." instance=ExtResource("10_yoq75")]
+offset_left = -507.0
+offset_top = -240.0
+offset_right = -267.0
+offset_bottom = -213.0
+scale = Vector2(0.822175, 0.464659)

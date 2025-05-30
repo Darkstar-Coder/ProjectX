@@ -27,9 +27,10 @@ func init(id: String, amount: int = 1):
 	
 func _on_body_entered(body):
 	if body.name == "Player":  # Or use group: if body.is_in_group("player")
+		Inventory.add_item(item_id, quantity) # Add item to player's inventory here
 		print("🧲 Player picked up:", item_id)
 
-		# TODO: Add item to player's inventory here
+		
 
 		# Optional: Play pickup animation or sound here
 
